@@ -1,0 +1,133 @@
+/* reset css */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+  font-family: "Ubuntu", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+.container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 30px;
+  height: 100%;
+  width: 100%;
+  background: #F0DB4F;
+}
+
+.alert{
+  font-size: 38px;
+  font-weight: 500;
+  color: #323330;
+}
+.alert__var{
+  font-weight: 600;
+}
+
+.link{
+  font-size: 24px;
+  color: #F0DB4F;
+  padding: 15px 20px;
+  background: #323330;
+  border: 1px solid #323330;
+  transition: all 0.3s ease;
+}
+.link:hover{
+  color: #323330;
+  background: transparent;
+}
+
+.user{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  margin: 0 0 30px 0;
+  background: #323330;
+  color: #F0DB4F;
+}
+.user__list{
+  display: none;
+
+}
+.user__list._active{
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  gap: 15px;
+}
+.user__item{
+  font-size: 24px;
+  font-weight: 500;
+}
+.user__undefind{
+  display: none;
+}
+.user__undefind._active{
+  display: flex;
+}
+.user__undefind._active p{
+  font-size: 24px;
+}
+.user__img{
+  width: 150px;
+  margin: 0 0 0 0;
+}
+.user__img img{
+  display: block;
+  width: 100%;
+}
