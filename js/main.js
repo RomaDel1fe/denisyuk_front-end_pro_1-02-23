@@ -1,37 +1,49 @@
-const numOne = parseInt(prompt("Enter the first number")) || 0;
-const numTwo = parseInt(prompt("Enter the second number")) || 22;
-
-const result = numOne > 0 && numTwo > 0 ? 80 : 40;
-
-const obj = {};
-
-if(numOne >= 90){
-  obj.size = 'big';
-}else if(numOne <= 40){
-  obj.size = 'small';
-}else{
-  obj.size = 'medium';
+let str = "";
+//* Вивести в консоль в один рядок через кому числа від 10 до 20.
+// for(let a = 10; a <= 20; a++){
+//   a <= 19 ? str += a + ', ' : str += a + '.'
+// }
+//* Вивести в консоль в один рядок через кому квадрати чисел від 10 до 20.
+// for(let b = 10; b <= 20; b++){
+//   b <= 19 ? str += b**2 + ', ' : str += b**2 + '.'
+// }
+//* Знайти добуток усіх цілих чисел від 15 до 35.
+// let int = 1;
+// for(let c = 15; c <= 35; c++){
+//   int *= c;
+// }
+// console.log(int);
+//* Знайти середнє арифметичне всіх цілих чисел від 1 до 500.
+// let sum = 0;
+// for(let d = 0; d <= 500; d++){
+//   sum += d;
+// }
+// const average = sum / 500;
+// console.log(average);
+//* Вивести суму лише парних чисел в діапазоні від 30 до 80.
+// let sum = 0;
+// for(let e = 30; e <= 80; e++){
+//   if(e % 2 === 0){
+//     sum += e;
+//   }
+// }
+// console.log(sum);
+//* Вивести всі числа в діапазоні від 100 до 200 кратні 3.
+// for(let f = 100; f < 200; f++){
+//   if(f % 3 === 0){
+//     console.log(f);
+//   }
+// }
+//* Дане ціле число. З'ясувати, чи є воно простим (простим називається число, більше 1, які не мають інших дільників крім 1 і себе).
+let num = parseInt(prompt("Enter number"));
+let isPrime = true;
+if(num <= 1){
+  isPrime = false;
 }
-
-let newResult;
-
-switch(obj.size){
-  case 'big':
-    newResult = 1000;
+for(let g = 2; g < num; g++){
+  if(num % g === 0){
+    isPrime = false;
     break;
-  case 'medium':
-    newResult = 100;
-    break;
-  case 'small':
-    newResult = 10;
-    break;
+  }
 }
-
-const finalResult = numOne * numTwo * result * newResult;
-
-if(finalResult % 2 !== 0){
-  console.log("The result is not an even number!");
-
-}else if(numTwo > 50){
-  alert(`${numTwo}`);
-}
+console.log(isPrime);
