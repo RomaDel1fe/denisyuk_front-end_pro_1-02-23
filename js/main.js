@@ -1,49 +1,99 @@
-let str = "";
-//* Вивести в консоль в один рядок через кому числа від 10 до 20.
-// for(let a = 10; a <= 20; a++){
-//   a <= 19 ? str += a + ', ' : str += a + '.'
-// }
-//* Вивести в консоль в один рядок через кому квадрати чисел від 10 до 20.
-// for(let b = 10; b <= 20; b++){
-//   b <= 19 ? str += b**2 + ', ' : str += b**2 + '.'
-// }
-//* Знайти добуток усіх цілих чисел від 15 до 35.
-// let int = 1;
-// for(let c = 15; c <= 35; c++){
-//   int *= c;
-// }
-// console.log(int);
-//* Знайти середнє арифметичне всіх цілих чисел від 1 до 500.
-// let sum = 0;
-// for(let d = 0; d <= 500; d++){
-//   sum += d;
-// }
-// const average = sum / 500;
-// console.log(average);
-//* Вивести суму лише парних чисел в діапазоні від 30 до 80.
-// let sum = 0;
-// for(let e = 30; e <= 80; e++){
-//   if(e % 2 === 0){
-//     sum += e;
-//   }
-// }
-// console.log(sum);
-//* Вивести всі числа в діапазоні від 100 до 200 кратні 3.
-// for(let f = 100; f < 200; f++){
-//   if(f % 3 === 0){
-//     console.log(f);
-//   }
-// }
-//* Дане ціле число. З'ясувати, чи є воно простим (простим називається число, більше 1, які не мають інших дільників крім 1 і себе).
-let num = parseInt(prompt("Enter number"));
-let isPrime = true;
-if(num <= 1){
-  isPrime = false;
-}
-for(let g = 2; g < num; g++){
-  if(num % g === 0){
-    isPrime = false;
-    break;
+const arr = [16,-37,54,-4,72,-56,47,4, -16,25,-37,46,4,-51,27,-63,4,-54,76,-4,12,-35,4,47];
+// * Знайти суму та кількість позитивних елементів.
+let sum = 0;
+let numOfPositive = 0;
+arr.forEach(function (item) {  
+  if(item > 0){
+    sum += item
+    numOfPositive++
+  }
+});
+console.log(`Сума = ${sum}, кількість позитивних елементів = ${numOfPositive}`);
+
+//* Знайти мінімальний елемент масиву та його порядковий номер.
+let minValue = arr[0];
+let minIndex = 0;
+// Цикл for працює швидше ніж метод масиву forEach
+for (let i = 1; i < arr.length; i++) {
+  if (arr[i] < minValue) {
+    minValue = arr[i];
+    minIndex = i;
   }
 }
-console.log(isPrime);
+console.log(`Мінімальний елемент: ${minValue}, Його порядковий номер: ${minIndex}`);
+
+//*Знайти максимальний елемент масиву та його порядковий номер.
+//?????????
+let maxValue = arr[0];
+let maxIndex = 0;
+for (let i = 1; i < arr.length; i++) {
+  if (arr[i] > maxValue) {
+    maxValue = arr[i];
+    maxIndex = i;
+  }
+}
+console.log(`Максимальний елемент: ${maxValue}, Його порядковий номер: ${maxIndex}`);
+
+//* Визначити кількість негативних елементів.
+let minValueLength = 0;
+arr.forEach(function (item) {
+  if(item < 0){
+    minValueLength++;
+  }
+});
+console.log(`Кількість негативних елементів ${minValueLength}`);
+
+//* Знайти кількість непарних позитивних елементів.
+let oddPositve = 0;
+arr.forEach(function (item) {
+  if(item > 0 && item % 2 === 1){
+    oddPositve++;
+  }
+});
+console.log(`Кількість непарних позитивних елементів ${oddPositve}`);
+
+//* Знайти кількість парних позитивних елементів.
+let evenPositive = 0;
+arr.forEach(function (item) {
+  if(item > 0 && item % 2 === 0){
+    evenPositive++;
+  }
+});
+console.log(`Кількість парних позитивних елементів ${evenPositive}`);
+
+//* Знайти суму парних позитивних елементів.
+let sumEven = 0;
+arr.forEach(function (item) {
+  if(item > 0 && item % 2 === 0){
+    sumEven += item;
+  }
+});
+console.log(`Сума парних позитивних елементів ${sumEven}`);
+
+//* Знайти суму непарних позитивних елементів.
+let sumOdd = 0;
+arr.forEach(function (item) {
+  if(item > 0 && item % 2 === 1){
+    sumOdd += item;
+  }
+});
+console.log(`Сума непарних позитивних елементів ${sumOdd}`);
+
+//* Знайти добуток позитивних елементів.
+let productPositiv = 1;
+arr.forEach(function (item) {
+  if(item > 0){
+    productPositiv *= item;
+  }
+});
+console.log(`Добуток позитивних елементів ${productPositiv}`);
+
+ //* Знайти найбільший серед елементів масиву, ост альні обнулити.
+const newArr = arr.map(item => {
+  if (item !== maxValue) {
+      return 0;
+  } else {
+      return item;
+  }
+});
+console.log(`Оновлений масив ${newArr}`);
