@@ -1,99 +1,74 @@
-const arr = [16,-37,54,-4,72,-56,47,4, -16,25,-37,46,4,-51,27,-63,4,-54,76,-4,12,-35,4,47];
-// * Знайти суму та кількість позитивних елементів.
-let sum = 0;
-let numOfPositive = 0;
-arr.forEach(function (item) {  
-  if(item > 0){
-    sum += item
-    numOfPositive++
-  }
-});
-console.log(`Сума = ${sum}, кількість позитивних елементів = ${numOfPositive}`);
-
-//* Знайти мінімальний елемент масиву та його порядковий номер.
-let minValue = arr[0];
-let minIndex = 0;
-// Цикл for працює швидше ніж метод масиву forEach
-for (let i = 1; i < arr.length; i++) {
-  if (arr[i] < minValue) {
-    minValue = arr[i];
-    minIndex = i;
-  }
-}
-console.log(`Мінімальний елемент: ${minValue}, Його порядковий номер: ${minIndex}`);
-
-//*Знайти максимальний елемент масиву та його порядковий номер.
-//?????????
-let maxValue = arr[0];
-let maxIndex = 0;
-for (let i = 1; i < arr.length; i++) {
-  if (arr[i] > maxValue) {
-    maxValue = arr[i];
-    maxIndex = i;
-  }
-}
-console.log(`Максимальний елемент: ${maxValue}, Його порядковий номер: ${maxIndex}`);
-
-//* Визначити кількість негативних елементів.
-let minValueLength = 0;
-arr.forEach(function (item) {
-  if(item < 0){
-    minValueLength++;
-  }
-});
-console.log(`Кількість негативних елементів ${minValueLength}`);
-
-//* Знайти кількість непарних позитивних елементів.
-let oddPositve = 0;
-arr.forEach(function (item) {
-  if(item > 0 && item % 2 === 1){
-    oddPositve++;
-  }
-});
-console.log(`Кількість непарних позитивних елементів ${oddPositve}`);
-
-//* Знайти кількість парних позитивних елементів.
-let evenPositive = 0;
-arr.forEach(function (item) {
-  if(item > 0 && item % 2 === 0){
-    evenPositive++;
-  }
-});
-console.log(`Кількість парних позитивних елементів ${evenPositive}`);
-
-//* Знайти суму парних позитивних елементів.
-let sumEven = 0;
-arr.forEach(function (item) {
-  if(item > 0 && item % 2 === 0){
-    sumEven += item;
-  }
-});
-console.log(`Сума парних позитивних елементів ${sumEven}`);
-
-//* Знайти суму непарних позитивних елементів.
-let sumOdd = 0;
-arr.forEach(function (item) {
-  if(item > 0 && item % 2 === 1){
-    sumOdd += item;
-  }
-});
-console.log(`Сума непарних позитивних елементів ${sumOdd}`);
-
-//* Знайти добуток позитивних елементів.
-let productPositiv = 1;
-arr.forEach(function (item) {
-  if(item > 0){
-    productPositiv *= item;
-  }
-});
-console.log(`Добуток позитивних елементів ${productPositiv}`);
-
- //* Знайти найбільший серед елементів масиву, ост альні обнулити.
-const newArr = arr.map(item => {
-  if (item !== maxValue) {
-      return 0;
-  } else {
-      return item;
-  }
-});
-console.log(`Оновлений масив ${newArr}`);
+//* Дан масив об'єктів. Вивести масив телефонних номерів користувачів, 
+//* у яких баланс більше 2000 доларів. І знайти суму всіх балансів користувачів
+let users = [
+  {
+    index: 0,
+    isActive: true,
+    balance: "$2,226.60",
+    name: "Eugenia Sawyer",
+    gender: "female",
+    phone: "+1 (840) 583-3207",
+    address: "949 John Street, Rose, Puerto Rico, 1857",
+  },
+  {
+    index: 1,
+    isActive: true,
+    balance: "$2,613.77",
+    name: "Pauline Gallegos",
+    gender: "female",
+    phone: "+1 (985) 593-3328",
+    address: "328 Greenpoint Avenue, Torboy, North Dakota, 6857",
+  },
+  {
+    index: 2,
+    isActive: false,
+    balance: "$3,976.41",
+    name: "Middleton Chaney",
+    gender: "male",
+    phone: "+1 (995) 591-2478",
+    address: "807 Fleet Walk, Brutus, Arkansas, 9783",
+  },
+  {
+    index: 3,
+    isActive: true,
+    balance: "$1,934.58",
+    name: "Burns Poole",
+    gender: "male",
+    phone: "+1 (885) 559-3422",
+    address: "730 Seba Avenue, Osage, Alabama, 6290",
+  },
+  {
+    index: 4,
+    isActive: true,
+    balance: "$3,261.65",
+    name: "Mcfadden Horne",
+    gender: "male",
+    phone: "+1 (942) 565-3988",
+    address: "120 Scholes Street, Kirk, Michigan, 1018",
+  },
+  {
+    index: 5,
+    isActive: false,
+    balance: "$1,790.56",
+    name: "Suzette Lewis",
+    gender: "female",
+    phone: "+1 (837) 586-3283",
+    address: "314 Dunne Place, Bawcomville, Guam, 9053",
+  },
+];
+// Перетворення значення балансу в число та видалення символу доллара
+const parseBalance = (balanceStr) => parseFloat(balanceStr.replace(/[,$]/g, ''));
+// Заміна значеня балансу на нове у вхідному масиві
+const usersParsedBalances = users.map((user) => ({
+  ...user,
+  balance: parseBalance(user.balance),
+}));
+// Фільтрація вихідного масиву за балансом та створення нового масиву носерів 
+const filteredPhoneNumbers = usersParsedBalances
+  .filter((user) => user.balance > 2000)
+  .map((user) => user.phone);
+// Вирахування суми балансів за допомогою метода reduce
+const totalBalance = usersParsedBalances.reduce((sum, user) => sum + user.balance, 0);
+// Вивід результатів
+console.log("Телефонні номери користувачів з балансом більше 2000 доларів:", filteredPhoneNumbers);
+console.log("Сума балансів усіх користувачів:", totalBalance.toFixed(2));
