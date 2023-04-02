@@ -1,80 +1,86 @@
-// 1)Написать функцию которая будет возвращать уникальные значения в массиве
-// Пример:
-// const yourFunc = (arr) => {};
-// const arr1 = [1,2,3,4,5,1,2,3,4,5]
-// yourFunc(arr1) // [1,2,3,4,5]
-// Должно работать с любыми значениями
-function uniqueValueSet(arr) {
-  const uniqueArr = [...new Set(arr)];
-  return uniqueArr;
-}
+// 1)Найдите числа которые повторяются нечетное количество раз в массиве
+// solution([12, 23, 34, 12, 12, 23, 12, 45]) -> [34 45]
+// solution([4, 4, 100, 5000, 4, 4, 4, 4, 4, 100, 100,]) -> [4 100 5000]
+// solution([3, 3, 4, 6, 4, 5, 9, 9, 21, 9]) -> [6 5 9 21]
+// solution([4, 8, 15, 16, 23, 42, 4, 15, 42, 42]) -> [8 16 23 42]
+// solution([2, 2, 44, 44]) => []
 
-function uniqueValue(arr){  
-  const uniqueArr = [];
-  arr.forEach((element) => {
-    if(!uniqueArr.includes(element)){
-      uniqueArr.push(element);
+function oddRepetition(arr){
+  const repetition = new Map();
+  for (const num of arr) {
+    repetition.set(num, (repetition.get(num) || 0) + 1);
+  }
+  const newArr = [];
+  for (const [key, value] of repetition.entries()) {
+    if (value % 2 !== 0) {
+      newArr.push(key);
     }
-  });
-  return uniqueArr;
+  }
+  return newArr;
 }
-const arr1 = [1,2,3,4,5,1,2,3,4,5]
-console.log(uniqueValueSet(arr1));
-console.log(uniqueValue(arr1));
+console.log(oddRepetition([12, 23, 34, 12, 12, 23, 12, 45]));
 
-// Напишите функцию которая принимает массив целых чисел и вернет число которое встречается чаще всего, если таких чисел несколько результатом должно быть число которое встречается первым,
-function popularElem(arr){
-  const countMap = new Map();
-  let popularNum = arr[0];
-  arr.forEach((num) =>{
-    const count = countMap.get(num) || 0;
-    countMap.set(num, count + 1);
-    if (countMap.get(num) > countMap.get(popularNum)) {
-      popularNum = num;
+// Создайте объект к которому можно будет применить любое число вызовов
+// // obj.method().method().method()
+// Передаваемое значение должно возвращаться в виде html тэгов
+// Передаваемые аргументы должны быть только в виде строки
+// Передаваемые аргументы должны помещаться внутрь предыдущих
+// Добавьте метод render, который будет возвращать сгенерированную строку.
+// Добавьте методу add второй параметр, который будет размещать информацию внутри тэга
+// Создание первого метода должно быть без метода
+
+function ezjQuery(tag) {
+  const obj = {
+    stack: [{ tag, content: '' }],
+
+    add(tag, content = "") {
+      const newTag = { tag, content };
+      obj.stack.push(newTag);
+      return obj;
+    },
+
+    render() {
+      let result = '';
+      const stackCopy = [...obj.stack];
+
+      while (stackCopy.length > 0) {
+        const current = stackCopy.pop();
+        result = `<${current.tag}>${current.content}${result}</${current.tag}>`;
+      }
+
+      obj.stack.length = 1;
+      obj.stack[0].content = '';
+
+      return result;
     }
-  });
-  return popularNum;
-}
-const arr2 = [1, 2, 3, 4, 5, 2, 3, 4, 4, 5];
-console.log(popularElem(arr2));
-
-
-// Что вернет выражение z(x) ?
-// Напишите ответ своими словами как вы понимаете
-// В консоле не смотрите, сначала напишите, после проверьте себя
-
-// let y = 5;
-// let x = () => y;
-// let z = t => {
-//   let y = 5;
-//   t();
-// };
-// z(x); // undefind из-за отсутствия return
-
-// Debounce
-// Результатом декоратора debounce(f, ms) должна быть обёртка, которая передаёт вызов f не более одного раза в ms миллисекунд. Другими словами, когда мы вызываем debounce, это гарантирует, что все остальные вызовы будут игнорироваться в течение ms.
-
-function debounce(func, delay) {
-  let isCooldown = false;
-
-  return function () {
-    if (isCooldown) return;
-
-    func.apply(this, arguments);
-
-    isCooldown = true;
-
-    setTimeout(() => {
-      isCooldown = false;
-    }, delay);
   };
+
+  return obj;
 }
 
-let f = debounce(alert, 1000);
 
-f(1); // выполняется немедленно
-f(2); // проигнорирован
+// // example
 
-setTimeout( () => f(3), 100); // проигнорирован (прошло только 100 мс)
-setTimeout( () => f(4), 1100); // выполняется
-setTimeout( () => f(5), 1500); // проигнорирован (прошло только 400 мс от последнего вызова)
+var helloList = ezjQuery('body') // <body></body>
+
+.add('div') // <body><div></div></body>
+
+.add('ul') // <body><div><ul></ul></div></body>
+
+.add('li', 'Hello') //<body><div><ul><li>Hello</li></ul></div></body>
+
+.render();
+
+console.log(helloList); // <body><div><ul><li>Hello</li></ul></div></body>
+
+// // Обратите внимание, что после вызова render создание строки началось сначала
+
+var bodyDiv = ezjQuery('body') //<body></body>
+
+.add('div') //<body><div></div></body>
+
+.render();
+
+console.log(bodyDiv); //<body><div></div></body>
+
+// document.write(helloList)
