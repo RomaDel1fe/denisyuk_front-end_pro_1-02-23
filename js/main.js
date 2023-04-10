@@ -1,86 +1,69 @@
-// 1)Найдите числа которые повторяются нечетное количество раз в массиве
-// solution([12, 23, 34, 12, 12, 23, 12, 45]) -> [34 45]
-// solution([4, 4, 100, 5000, 4, 4, 4, 4, 4, 100, 100,]) -> [4 100 5000]
-// solution([3, 3, 4, 6, 4, 5, 9, 9, 21, 9]) -> [6 5 9 21]
-// solution([4, 8, 15, 16, 23, 42, 4, 15, 42, 42]) -> [8 16 23 42]
-// solution([2, 2, 44, 44]) => []
+// 1)Проверьте что строка содержит все символы от "a" до "z"
+aToZ("wyyga") // false
+aToZ("qwertyuioplkjhgfdsazxcvbnm") // true
+aToZ("ejuxggfsts") // false
+aToZ("qpwoeirutyalskdjfhgmznxbcv") // true
+aToZ("qqqqqqqqpwoeirutyalskdjfhgmznxbcv") // true
+aToZ("0123456789abcdefghijklmnop") // false
 
-function oddRepetition(arr){
-  const repetition = new Map();
-  for (const num of arr) {
-    repetition.set(num, (repetition.get(num) || 0) + 1);
+function aToZ(str){
+  const alphabet = "abcdefghijklmnopqrstuvwxyz";
+  const letterMap = new Map();
+  for (let i = 0; i < alphabet.length; i++) {
+    letterMap.set(alphabet[i], false);
   }
-  const newArr = [];
-  for (const [key, value] of repetition.entries()) {
-    if (value % 2 !== 0) {
-      newArr.push(key);
-    }
+  for (let i = 0; i < str.length; i++) {
+    letterMap.set(str[i], true);
   }
-  return newArr;
-}
-console.log(oddRepetition([12, 23, 34, 12, 12, 23, 12, 45]));
-
-// Создайте объект к которому можно будет применить любое число вызовов
-// // obj.method().method().method()
-// Передаваемое значение должно возвращаться в виде html тэгов
-// Передаваемые аргументы должны быть только в виде строки
-// Передаваемые аргументы должны помещаться внутрь предыдущих
-// Добавьте метод render, который будет возвращать сгенерированную строку.
-// Добавьте методу add второй параметр, который будет размещать информацию внутри тэга
-// Создание первого метода должно быть без метода
-
-function ezjQuery(tag) {
-  const obj = {
-    stack: [{ tag, content: '' }],
-
-    add(tag, content = "") {
-      const newTag = { tag, content };
-      obj.stack.push(newTag);
-      return obj;
-    },
-
-    render() {
-      let result = '';
-      const stackCopy = [...obj.stack];
-
-      while (stackCopy.length > 0) {
-        const current = stackCopy.pop();
-        result = `<${current.tag}>${current.content}${result}</${current.tag}>`;
-      }
-
-      obj.stack.length = 1;
-      obj.stack[0].content = '';
-
-      return result;
-    }
-  };
-
-  return obj;
+  return console.log(!Array.from(letterMap.values()).includes(false));
 }
 
+// 2)Вам дано предложение, верните массив из слов, которые длинее чем средняя длина всех слов.
+// Слова разделены пробелами, если в предложении запятые,они должны быть пропущены
+getLongerWords(["This is a sample string"]) //expected ["This" "sample" "string"]
+getLongerWords(["Some another sample"]) //expected ["another" "sample"]
+getLongerWords(["Do, do, do, do... do it!"]) //expected []
 
-// // example
+function getLongerWords(arr) {
+  const words = arr[0].match(/[^\s,.!?]+/g);
+  if (!words) {
+    return [];
+  }
+  const averageLength = words.reduce((acc, val) => acc + val.length, 0) / words.length;
+  const result = words.filter(word => word.length > averageLength);
+  return console.log(result);;
+}
 
-var helloList = ezjQuery('body') // <body></body>
+// 3)
+// Сделайте 4 объекта - не усложняйте, просто наследование через __proto__
+// - Пользователь - Верифицированный пользователь - Гость - База данных -
+// База хранит информацию о пользователях
+// Пользователи знают мыло админа
+// Aдмин знает пароль от базы данных
+// Гости могут зарегистрироваться в базе данных
 
-.add('div') // <body><div></div></body>
+// Об'єкт База Даних
+const database = {
+  users: [],
+  adminPassword: "123456Wick",
+};
 
-.add('ul') // <body><div><ul></ul></div></body>
+// Об'єкт Гість
+const guest = {
+  __proto__: database,
+  registerUser: function(user) {
+    this.users.push(user);
+  },
+};
 
-.add('li', 'Hello') //<body><div><ul><li>Hello</li></ul></div></body>
+// Об'єкт Верифікований Користувач
+const verifiedUser = {
+  __proto__: guest,
+  email: "j_wick@gmail.com",
+};
 
-.render();
-
-console.log(helloList); // <body><div><ul><li>Hello</li></ul></div></body>
-
-// // Обратите внимание, что после вызова render создание строки началось сначала
-
-var bodyDiv = ezjQuery('body') //<body></body>
-
-.add('div') //<body><div></div></body>
-
-.render();
-
-console.log(bodyDiv); //<body><div></div></body>
-
-// document.write(helloList)
+// Об'єкт Користувач
+const user = {
+  __proto__: verifiedUser,
+  name: "John Wick",
+};
