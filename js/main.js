@@ -1,6 +1,13 @@
-import { greet, numbers } from "./data.js";
+document.addEventListener('DOMContentLoaded', () => {
+  const inputElement = document.querySelector('.input');
+  const infoElement = document.querySelector('.info');
 
-greet("Олександр");
+  inputElement.addEventListener('focus', () => {
+    infoElement.style.display = 'block';
+    console.log('object');
+  });
 
-const sum = numbers.reduce((acc, num) => acc + num, 0);
-console.log(`Сума чисел: ${sum}`);
+  inputElement.addEventListener('blur', () => {
+    infoElement.style.display = 'none';
+  });
+});

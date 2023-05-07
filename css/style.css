@@ -74,6 +74,28 @@ a {
   font-weight: 500;
   color: #323330;
 }
+.input{
+  outline: none;
+  padding: 5px 10px;
+  font-size: 16px;
+  background: #F0DB4F;
+  border: 1px solid #323330;
+  border-radius: 5px;
+}
+.info {
+  display: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 60%;
+  padding: 5px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.info.focus{
+  display: block;
+}
 .alert__var{
   font-weight: 600;
 }
