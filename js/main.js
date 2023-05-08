@@ -1,13 +1,38 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const inputElement = document.querySelector('.input');
-  const infoElement = document.querySelector('.info');
+  const emojiContainer = document.querySelector('.emoji-container');
+  const emojis = ['😀', '😁', '😂', '🤣', '😃'];
 
-  inputElement.addEventListener('focus', () => {
-    infoElement.style.display = 'block';
-    console.log('object');
-  });
+  function createEmojiElement(emoji) {
+    const emojiElement = document.createElement('span');
+    emojiElement.classList.add('emoji', 'noselect');
+    emojiElement.textContent = emoji;
+    return emojiElement;
+  }
 
-  inputElement.addEventListener('blur', () => {
-    infoElement.style.display = 'none';
+  function createCounterElement() {
+    const counterElement = document.createElement('span');
+    counterElement.classList.add('counter', 'noselect');
+    counterElement.textContent = '0';
+    return counterElement;
+  }
+
+  function handleEmojiClick(emojiWrapper) {
+    const counter = emojiWrapper.querySelector('.counter');
+    counter.textContent = parseInt(counter.textContent) + 1;
+  }
+
+  emojis.forEach(emoji => {
+    const emojiWrapper = document.createElement('div');
+    emojiWrapper.classList.add('emoji-wrapper');
+
+    const emojiElement = createEmojiElement(emoji);
+    const counterElement = createCounterElement();
+
+    emojiWrapper.appendChild(emojiElement);
+    emojiWrapper.appendChild(counterElement);
+
+    emojiWrapper.addEventListener('click', () => handleEmojiClick(emojiWrapper));
+
+    emojiContainer.appendChild(emojiWrapper);
   });
 });
