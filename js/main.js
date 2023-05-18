@@ -1,7 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Emoji
-  const emojiContainer = document.querySelector('.emoji-container');
-  const emojis = ['😀', '😁', '😂', '🤣', '😃'];
   // Shop
   const categories = [
     { id: 1, name: "Електроніка" },
@@ -21,43 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const categoriesContainer = document.querySelector(".categories");
   const productsContainer = document.querySelector(".products");
   const productDetailsContainer = document.querySelector(".product-details");
+  const orderFormContainer = document.querySelector(".order-form");
 
-  // Emoji
-  function createEmojiElement(emoji) {
-    const emojiElement = document.createElement('span');
-    emojiElement.classList.add('emoji', 'noselect');
-    emojiElement.textContent = emoji;
-    return emojiElement;
-  }
-
-  function createCounterElement() {
-    const counterElement = document.createElement('span');
-    counterElement.classList.add('counter', 'noselect');
-    counterElement.textContent = '0';
-    return counterElement;
-  }
-
-  function handleEmojiClick(emojiWrapper) {
-    const counter = emojiWrapper.querySelector('.counter');
-    counter.textContent = parseInt(counter.textContent) + 1;
-  }
-
-  emojis.forEach(emoji => {
-    const emojiWrapper = document.createElement('div');
-    emojiWrapper.classList.add('emoji-wrapper');
-
-    const emojiElement = createEmojiElement(emoji);
-    const counterElement = createCounterElement();
-
-    emojiWrapper.appendChild(emojiElement);
-    emojiWrapper.appendChild(counterElement);
-
-    emojiWrapper.addEventListener('click', () => handleEmojiClick(emojiWrapper));
-
-    emojiContainer.appendChild(emojiWrapper);
-  });
-
-  // Shop
   function showCategories() {
     categories.forEach((category) => {
       const categoryElement = document.createElement("button");
@@ -83,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function showProductDetails(productId) {
     productDetailsContainer.innerHTML = "";
+    orderFormContainer.innerHTML = "";
 
     const product = products.find((p) => p.id === productId);
 
@@ -96,13 +59,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const buyButton = document.createElement("button");
     buyButton.textContent = "Купити";
-    buyButton.addEventListener("click", () => {
-      alert(`Товар "${product.name}" куплено!`);
-      productsContainer.innerHTML = "";
-      productDetailsContainer.innerHTML = "";
-    });
+    buyButton.addEventListener("click", () => showOrderForm(product));
     productDetailsContainer.appendChild(buyButton);
   }
 
+  function showOrderForm(product) {
+    fetch('/components/form.html')
+      .then(response => response.text())
+      .then(data => {
+        orderFormContainer.innerHTML = data;
+  
+        document.getElementById('orderForm').addEventListener('submit', (e) => {
+          e.preventDefault();
+  
+          const buyerName = document.getElementById('buyerName').value;
+          const city = document.getElementById('city').value;
+          const newPostOffice = document.getElementById('newPostOffice').value;
+          const productQuantity = document.getElementById('productQuantity').value;
+          const orderComments = document.getElementById('orderComments').value;
+  
+          if (buyerName && city && newPostOffice && productQuantity) {
+            const message = `<span>Замовлено ${productQuantity} одиниць товару"${product.name}".</span>
+              <span>Доставка в місто ${city}, на склад №${newPostOffice}.</span>
+              <span>Коментар до замовлення: ${orderComments}</span>`;
+            orderFormContainer.innerHTML = `<p class="message">${message}</p>`;
+            productsContainer.innerHTML = "";
+            productDetailsContainer.innerHTML = "";
+          } else {
+            alert('Будь ласка, заповніть всі обов’язкові поля.');
+          }
+        });
+      });
+  }  
   showCategories();
 });
