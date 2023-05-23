@@ -192,3 +192,8 @@ a {
   flex-direction: column;
   text-align: center;
 }
+
+.hide{
+  width: 0;
+  opacity: 0;
+}
